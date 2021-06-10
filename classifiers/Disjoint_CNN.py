@@ -28,16 +28,46 @@ class Classifier_Disjoint_CNN:
 
         X_input = Input(shape=input_shape)
 
-        # Temporal Convolutions
-        X = Conv2D(256, (8, 1), strides=1, padding="same", kernel_initializer='he_uniform')(X_input)
-        X = keras.layers.BatchNormalization()(X)
-        X = keras.layers.ELU(alpha=1.0)(X)
+ 	# Temporal Convolutions
+        conv1 = Conv2D(64, (8, 1), strides=1, padding="same", kernel_initializer='he_uniform')(X_input)
+        conv1 = BatchNormalization()(conv1)
+        conv1 = ELU(alpha=1.0)(conv1)
         # Spatial Convolutions
-        X = Conv2D(256, (1, input_shape[1]), strides=1, padding="valid", kernel_initializer='he_uniform')(X)
-        X = keras.layers.BatchNormalization()(X)
-        X = keras.layers.ELU(alpha=1.0)(X)
+        conv1 = Conv2D(64, (1, input_shape[1]), strides=1, padding="valid", kernel_initializer='he_uniform')(conv1)
+        conv1 = BatchNormalization()(conv1)
+        conv1 = ELU(alpha=1.0)(conv1)
+        conv1 = Permute((1,3,2))(conv1)
 
-        MaxPool = MaxPooling2D(pool_size=(5, 1), strides=None, padding='valid')(X)
+        # Temporal Convolutions
+        conv2 = Conv2D(64, (5, 1), strides=1, padding="same", kernel_initializer='he_uniform')(conv1)
+        conv2 = BatchNormalization()(conv2)
+        conv2 = ELU(alpha=1.0)(conv2)
+        # Spatial Convolutions
+        conv2 = Conv2D(64, (1, conv2.shape[2]), strides=1, padding="valid", kernel_initializer='he_uniform')(conv2)
+        conv2 = BatchNormalization()(conv2)
+        conv2 = ELU(alpha=1.0)(conv2)
+        conv2 = Permute((1, 3, 2))(conv2)
+
+        # Temporal Convolutions
+        conv3 = Conv2D(64, (5, 1), strides=1, padding="same", kernel_initializer='he_uniform')(conv2)
+        conv3 = BatchNormalization()(conv3)
+        conv3 = ELU(alpha=1.0)(conv3)
+        # Spatial Convolutions
+        conv3 = Conv2D(64, (1, conv3.shape[2]), strides=1, padding="valid", kernel_initializer='he_uniform')(conv2)
+        conv3 = BatchNormalization()(conv3)
+        conv3 = ELU(alpha=1.0)(conv3)
+        conv3 = Permute((1, 3, 2))(conv3)
+
+        # Temporal Convolutions
+        conv4 = Conv2D(64, (3, 1), strides=1, padding="same", kernel_initializer='he_uniform')(conv3)
+        conv4 = BatchNormalization()(conv4)
+        conv4 = ELU(alpha=1.0)(conv4)
+        # Spatial Convolutions
+        conv4 = Conv2D(64, (1, conv4.shape[2]), strides=1, padding="valid", kernel_initializer='he_uniform')(conv4)
+        conv4 = BatchNormalization()(conv4)
+        conv4 = ELU(alpha=1.0)(conv4)
+
+        MaxPool = MaxPooling2D(pool_size=(5, 1), strides=None, padding='valid')(conv4)
         gap_DCNN = GlobalAveragePooling2D()(MaxPool)
 
         dense = Dense(128, activation="relu")(gap_DCNN)
