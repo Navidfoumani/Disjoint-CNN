@@ -1,0 +1,131 @@
+"classifier_name","dataset_name","accuracy"
+"1+1D (Temporal-Spatial)","ArticularyWordRecognition",0.916666666666667
+"1+1D (Temporal-Spatial)","AtrialFibrillation",0.333333333333333
+"1+1D (Temporal-Spatial)","BasicMotions",0.825
+"1+1D (Temporal-Spatial)","Cricket",0.972222222222222
+"1+1D (Temporal-Spatial)","DuckDuckGeese",0.54
+"1+1D (Temporal-Spatial)","Epilepsy",1
+"1+1D (Temporal-Spatial)","EthanolConcentration",0.250950570342205
+"1+1D (Temporal-Spatial)","EigenWorms",0.534351145038168
+"1+1D (Temporal-Spatial)","Ering",0.662962962962963
+"1+1D (Temporal-Spatial)","FaceDetection",0.542565266742338
+"1+1D (Temporal-Spatial)","FingerMovements",0.59
+"1+1D (Temporal-Spatial)","HandMovementDirection",0.324324324324324
+"1+1D (Temporal-Spatial)","Handwriting",0.052941176470588
+"1+1D (Temporal-Spatial)","Heartbeat",0.751219512195122
+"1+1D (Temporal-Spatial)","Libras",0.966666666666667
+"1+1D (Temporal-Spatial)","LSST",0.577858880778589
+"1+1D (Temporal-Spatial)","MotorImagery",0.55
+"1+1D (Temporal-Spatial)","NATOPS",0.95
+"1+1D (Temporal-Spatial)","PenDigits",0.982561463693539
+"1+1D (Temporal-Spatial)","PEMS-SF",0.687861271676301
+"1+1D (Temporal-Spatial)","PhonemeSpectra",0.256486728303012
+"1+1D (Temporal-Spatial)","RacketSports",0.835526315789474
+"1+1D (Temporal-Spatial)","SelfRegulationSCP1",0.914675767918089
+"1+1D (Temporal-Spatial)","SelfRegulationSCP2",0.544444444444444
+"1+1D (Temporal-Spatial)","StandWalkJump",0.4
+"1+1D (Temporal-Spatial)","UWaveGestureLibrary",0.871875
+"Temporal","ArticularyWordRecognition",0.5
+"Temporal","AtrialFibrillation",0.266666666666667
+"Temporal","BasicMotions",0.625
+"Temporal","Cricket",0.75
+"Temporal","DuckDuckGeese",0.2
+"Temporal","Epilepsy",0.557251908396947
+"Temporal","EthanolConcentration",0.992753623188406
+"Temporal","EigenWorms",0.288973384030418
+"Temporal","Ering",0.744444444444444
+"Temporal","FaceDetection",0.552780930760499
+"Temporal","FingerMovements",0.47
+"Temporal","HandMovementDirection",0.283783783783784
+"Temporal","Handwriting",0.078823529411765
+"Temporal","Heartbeat",0.721951219512195
+"Temporal","Libras",0.627777777777778
+"Temporal","LSST",0.502838605028386
+"Temporal","MotorImagery",0.63
+"Temporal","NATOPS",0.655555555555556
+"Temporal","PenDigits",0.973413379073756
+"Temporal","PEMS-SF",0.543352601156069
+"Temporal","PhonemeSpectra",0.265732180137191
+"Temporal","RacketSports",0.631578947368421
+"Temporal","SelfRegulationSCP1",0.74061433447099
+"Temporal","SelfRegulationSCP2",0.566666666666667
+"Temporal","StandWalkJump",0.333333333333333
+"Temporal","UWaveGestureLibrary",0.528125
+"Spatial","ArticularyWordRecognition",0.923333333333333
+"Spatial","AtrialFibrillation",0.4
+"Spatial","BasicMotions",0.525
+"Spatial","Cricket",0.986111111111111
+"Spatial","DuckDuckGeese",0.62
+"Spatial","Epilepsy",0.221374045801527
+"Spatial","EthanolConcentration",0.956521739130435
+"Spatial","EigenWorms",0.300380228136882
+"Spatial","Ering",0.096296296296296
+"Spatial","FaceDetection",0.525539160045403
+"Spatial","FingerMovements",0.48
+"Spatial","HandMovementDirection",0.310810810810811
+"Spatial","Handwriting",0.087058823529412
+"Spatial","Heartbeat",0.712195121951219
+"Spatial","Libras",0.788888888888889
+"Spatial","LSST",0.433901054339011
+"Spatial","MotorImagery",0.52
+"Spatial","NATOPS",0.838888888888889
+"Spatial","PenDigits",0.849342481417953
+"Spatial","PEMS-SF",0.751445086705202
+"Spatial","PhonemeSpectra",0.120489114226066
+"Spatial","RacketSports",0.756578947368421
+"Spatial","SelfRegulationSCP1",0.897610921501707
+"Spatial","SelfRegulationSCP2",0.55
+"Spatial","StandWalkJump",0.4
+"Spatial","UWaveGestureLibrary",0.6375
+"Spatial-Temporal","ArticularyWordRecognition",0.953333333333333
+"Spatial-Temporal","AtrialFibrillation",0.466666666666667
+"Spatial-Temporal","BasicMotions",0.55
+"Spatial-Temporal","Cricket",0.972222222222222
+"Spatial-Temporal","DuckDuckGeese",0.56
+"Spatial-Temporal","Epilepsy",0.221374045801527
+"Spatial-Temporal","EthanolConcentration",0.985507246376812
+"Spatial-Temporal","EigenWorms",0.32319391634981
+"Spatial-Temporal","Ering",0.296296296296296
+"Spatial-Temporal","FaceDetection",0.524971623155505
+"Spatial-Temporal","FingerMovements",0.53
+"Spatial-Temporal","HandMovementDirection",0.337837837837838
+"Spatial-Temporal","Handwriting",0.058823529411765
+"Spatial-Temporal","Heartbeat",0.780487804878049
+"Spatial-Temporal","Libras",0.916666666666667
+"Spatial-Temporal","LSST",0.538523925385239
+"Spatial-Temporal","MotorImagery",0.51
+"Spatial-Temporal","NATOPS",0.95
+"Spatial-Temporal","PenDigits",0.985991995425958
+"Spatial-Temporal","PEMS-SF",0.791907514450867
+"Spatial-Temporal","PhonemeSpectra",0.264240978228452
+"Spatial-Temporal","RacketSports",0.842105263157895
+"Spatial-Temporal","SelfRegulationSCP1",0.822525597269625
+"Spatial-Temporal","SelfRegulationSCP2",0.588888888888889
+"Spatial-Temporal","StandWalkJump",0.266666666666667
+"Spatial-Temporal","UWaveGestureLibrary",0.80625
+"1D","ArticularyWordRecognition",0.98
+"1D","AtrialFibrillation",0.333333333333333
+"1D","BasicMotions",0.5
+"1D","Cricket",0.986111111111111
+"1D","DuckDuckGeese",0.52
+"1D","Epilepsy",0.985507246376812
+"1D","EthanolConcentration",0.26615969581749
+"1D","EigenWorms",0.053435114503817
+"1D","Ering",0.651851851851852
+"1D","FaceDetection",0.528660612939841
+"1D","FingerMovements",0.57
+"1D","HandMovementDirection",0.364864864864865
+"1D","Handwriting",0.047058823529412
+"1D","Heartbeat",0.648780487804878
+"1D","Libras",0.833333333333333
+"1D","LSST",0.430656934306569
+"1D","MotorImagery",0.5
+"1D","NATOPS",0.977777777777778
+"1D","PenDigits",0.982847341337907
+"1D","PEMS-SF",0.745664739884393
+"1D","PhonemeSpectra",0.243662391887862
+"1D","RacketSports",0.855263157894737
+"1D","SelfRegulationSCP1",0.870307167235495
+"1D","SelfRegulationSCP2",0.566666666666667
+"1D","StandWalkJump",0.466666666666667
+"1D","UWaveGestureLibrary",0.859375
