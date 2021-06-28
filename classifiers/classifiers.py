@@ -4,7 +4,6 @@ import pandas as pd
 import sklearn.metrics as m
 from sklearn.metrics import confusion_matrix
 
-__author__ = "Chang Wei Tan and Navid Foumani"
 
 
 def get_binary_labels_softmax(y):
