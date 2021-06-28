@@ -5,7 +5,6 @@ import keras
 from classifiers.classifiers import predict_model
 from utils.tools import save_logs
 
-__author__ = "Chang Wei Tan"
 # Most of the code here are taken from https://github.com/hfawaz/dl-4-tsc
 
 class Classifier_ResNet:
