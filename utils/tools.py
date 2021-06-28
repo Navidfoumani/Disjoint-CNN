@@ -6,9 +6,6 @@ import pandas as pd
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 from sklearn.preprocessing import LabelEncoder
 
-__author__ = "Chang Wei Tan"
-
-# Most of the code here are taken from https://github.com/hfawaz/dl-4-tsc
 
 
 def create_directory(directory_path):
