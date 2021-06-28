@@ -8,7 +8,6 @@ from classifiers.classifiers import predict_model
 from utils.classifier_tools import create_class_weight
 from utils.tools import save_logs
 
-__author__ = "Navid Foumani"
 
 
 class Classifier_S_CNN:
