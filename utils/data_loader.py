@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 import random
 
-__author__ = "Chang Wei Tan and Navid Fumani"
 
 def process_ts_data(X, vary_len: str = "suffix-noise", normalise: bool = False):
     """
