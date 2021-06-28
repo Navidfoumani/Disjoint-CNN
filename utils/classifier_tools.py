@@ -5,7 +5,6 @@ from scipy import stats
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-__author__ = "Chang Wei Tan"
 
 
 # Most of the code here are taken from https://github.com/hfawaz/dl-4-tsc
