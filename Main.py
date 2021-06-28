@@ -8,7 +8,6 @@ from utils.data_loader import process_ts_data
 pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 
-__author__ = "Seyed Navid Mohammadi Foumani"
 
 
 def fit_classifier(all_labels, X_train, y_train, X_val=None, y_val=None, epochs=10, batch_size=16):
