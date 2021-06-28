@@ -8,7 +8,6 @@ from utils.classifier_tools import create_class_weight
 from utils.tools import save_logs
 from keras_multi_head import MultiHeadAttention
 
-__author__ = "Navid Foumani"
 
 
 class Classifier_MLSTM_FCN:
