@@ -1,5 +1,5 @@
 # Disjoint-CNN for MTSC Code and Results
-# This is the official Code for "Disjoint-CNN for Multivariate Time Series Classification"
+### This is the official Code for "Disjoint-CNN for Multivariate Time Series Classification"
 
 
 ## Table of contents
