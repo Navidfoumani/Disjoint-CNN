@@ -105,8 +105,7 @@ Multivariate LSTM-FCN : 'MLSTM_FCN', Multi-Channel Deep CNN: 'MC_CNN'
 ALL_Results = pd.DataFrame()
 ALL_Results_list = []
 problem_index = 0
-# data_path = os.getcwd() + '/Multivariate_ts/'
-data_path = os.getcwd() + '/ts_test/'
+data_path = os.getcwd() + '/Multivariate_ts/'
 # Hyper-Parameter Setting ----------------------------------------------------------------------------------------------
 classifier_name = "DCNN_2L"  # Choose the classifier name from above mentioned List
 epochs = 500
