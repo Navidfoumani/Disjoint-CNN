@@ -30,11 +30,7 @@ def fit_classifier(all_labels, X_train, y_train, X_val=None, y_val=None, epochs=
 
 def create_classifier(classifier_name, input_shape, nb_classes, verbose=False):
 
-    if classifier_name == "DCNN":
-        from classifiers import Disjoint_CNN
-        return Disjoint_CNN.Classifier_Disjoint_CNN(sub_output_directory, input_shape, nb_classes, verbose)
-
-    # Hyper-Parameter Setting Networks ------------------------------------------------------------------------------
+    # Networks ------------------------------------------------------------------------------
     if classifier_name == "T_CNN":
         from classifiers import T_CNN
         return T_CNN.Classifier_T_CNN(sub_output_directory, input_shape, nb_classes, verbose)
@@ -54,6 +50,7 @@ def create_classifier(classifier_name, input_shape, nb_classes, verbose=False):
     if classifier_name == "DCNN_4L":
         from classifiers import DCNN_4L
         return DCNN_4L.Classifier_DCNN_4L(sub_output_directory, input_shape, nb_classes, verbose)
+    
     # ------------------------------------------------------------------------------------------------------------------
     # Component Analysis -----------------------------------------------------------------------------------------------
     if classifier_name == "FCN":
