@@ -9,7 +9,6 @@ pd.set_option('display.max_rows', 500)
 pd.set_option('display.max_columns', 500)
 
 
-
 def fit_classifier(all_labels, X_train, y_train, X_val=None, y_val=None, epochs=10, batch_size=16):
     nb_classes = len(np.unique(all_labels))
     # Create Classifier --------------------------------------------------------
@@ -82,10 +81,22 @@ def create_classifier(classifier_name, input_shape, nb_classes, verbose=False):
         return lstm_dcnn.Classifier_LSTM_DCNN(sub_output_directory, input_shape, nb_classes, verbose)
 
 
+def s_length(train_df, test_df):
+    train_lengths = train_df.applymap(lambda x: len(x)).values
+    test_lengths = test_df.applymap(lambda x: len(x)).values
+
+    train_vert_diffs = np.abs(train_lengths - np.expand_dims(train_lengths[0, :], 0))
+
+    if np.sum(train_vert_diffs) > 0:  # if any column (dimension) has varying length across samples
+        train_max_seq_len = int(np.max(train_lengths[:, 0]))
+        test_max_seq_len = int(np.max(test_lengths[:, 0]))
+        max_seq_len = np.max([train_max_seq_len, test_max_seq_len])
+    else:
+        max_seq_len = train_lengths[0, 0]
+    return max_seq_len
 # Problem Setting -----------------------------------------------------------------------------------------------------
 '''
-Classifier List: 
-Disjoint CNN for Parameter setting : 'DCNN_1L', 'DCNN_2L', ..., 'DCNN_5L'
+Disjoint CNN :'DCNN_2L', 'DCNN_3L', 'DCNN_4L'
 Temporal CNN : 'T_CNN'  ,  Spatial CNN: 'S_CNN' , Spatial-Temporal CNN : 'ST_CNN' 
 Fully Convolutional Network: 'FCN' , Disjoint FCN : 'D_FCN' , Residual Network: 'ResNet', Disjoint ResNet: 'D_ResNet' 
 Multivariate LSTM-FCN : 'MLSTM_FCN', Multi-Channel Deep CNN: 'MC_CNN'
@@ -94,11 +105,11 @@ Multivariate LSTM-FCN : 'MLSTM_FCN', Multi-Channel Deep CNN: 'MC_CNN'
 ALL_Results = pd.DataFrame()
 ALL_Results_list = []
 problem_index = 0
-data_path = os.getcwd() + '/Multivariate_ts/'
-#data_path = os.getcwd() + '/ts_test/'
+# data_path = os.getcwd() + '/Multivariate_ts/'
+data_path = os.getcwd() + '/ts_test/'
 # Hyper-Parameter Setting ----------------------------------------------------------------------------------------------
-classifier_name = "MC_CNN"  # Choose the classifier name from above mentioned List
-epochs = 5
+classifier_name = "DCNN_2L"  # Choose the classifier name from above mentioned List
+epochs = 500
 Resample = 1  # Set to '1' for default Train and Test Sets, and '30' for running on all resampling
 # ----------------------------------------------------------------------------------------------------------------------
 # ----------------------------------------------------------------------------------------------------------------------
@@ -118,15 +129,16 @@ for problem in os.listdir(data_path):
     # Load Train and Test using sktime.utils.load_data function
     X_train, Y_train = load_from_tsfile_to_dataframe(train_file)
     X_test, Y_test = load_from_tsfile_to_dataframe(test_file)
-    X_train = process_ts_data(X_train, normalise=False)
-    X_test = process_ts_data(X_test, normalise=False)
+    max_length = s_length(X_train, X_test)
+    X_train = process_ts_data(X_train, max_length, normalise=False)
+    X_test = process_ts_data(X_test, max_length,  normalise=False)
 
     all_data = np.vstack((X_train, X_test))
     all_labels = np.hstack((Y_train, Y_test))
     all_indices = np.arange(len(all_data))
 
     for itr in range(0, Resample):
-        sub_output_directory = output_directory + str(itr+1) + '/'
+        sub_output_directory = output_directory + str(itr + 1) + '/'
         create_directory(sub_output_directory)
         # Default Train and Test Set
         if itr == 0:
@@ -139,8 +151,8 @@ for problem in os.listdir(data_path):
                                           skiprows=itr,
                                           max_rows=1).astype(np.int32)
             test_indices = np.loadtxt("multi_indices/{}_INDICES_TEST.txt".format(problem),
-                                          skiprows=itr,
-                                          max_rows=1).astype(np.int32)
+                                      skiprows=itr,
+                                      max_rows=1).astype(np.int32)
             x_train, y_train = all_data[training_indices, :], all_labels[training_indices]
             x_test, y_test = all_data[test_indices, :], all_labels[test_indices]
 
@@ -153,7 +165,8 @@ for problem in os.listdir(data_path):
 
         # Making Consistent with Keras Input ---------------------------------------------------
         if classifier_name == "FCN" or classifier_name == "ResNet" or classifier_name == "MLSTM_FCN":
-            pass
+            x_train = x_train.reshape(x_train.shape[0], x_train.shape[2], x_train.shape[1])
+            x_test = x_test.reshape(x_test.shape[0], x_test.shape[2], x_test.shape[1])
         else:
             x_train = x_train.reshape(x_train.shape[0], x_train.shape[1], x_train.shape[2], 1)
             x_test = x_test.reshape(x_test.shape[0], x_test.shape[1], x_test.shape[2], 1)
@@ -163,28 +176,29 @@ for problem in os.listdir(data_path):
         if problem == 'EigenWorms' or problem == 'DuckDuck':
             batch_size = 1
         else:
-            batch_size = np.ceil(x_train.shape[0] / (8 * (np.max(y_train.shape[1]) + 1)))
-
-        val_index = np.random.randint(0, np.int(x_train.shape[0]), np.int(x_train.shape[0]/10), dtype=int)
+            # batch_size = np.ceil(x_train.shape[0] / (8 * (np.max(y_train.shape[1]) + 1)))
+            batch_size = 8
+            
+        val_index = np.random.randint(0, np.int(x_train.shape[0]), np.int(x_train.shape[0] / 10), dtype=int)
         x_val = x_train[val_index, :]
         y_val = y_train[val_index, :]
 
-        classifier = fit_classifier(all_labels_new, x_train, y_train, x_val, y_val, epochs, batch_size)
-        metrics_test, conf_mat = classifier.predict(x_test, y_test, best=True)
-        metrics_test2, conf_mat2 = classifier.predict(x_test, y_test, best=False)
+    classifier = fit_classifier(all_labels_new, x_train, y_train, x_val, y_val, epochs, batch_size)
+    metrics_test, conf_mat = classifier.predict(x_test, y_test, best=True)
+    metrics_test2, conf_mat2 = classifier.predict(x_test, y_test, best=False)
 
-        metrics_test['train/val/test/test2'] = 'test'
-        metrics_test2['train/val/test/test2'] = 'test2'
-        metrics = pd.concat([metrics_test, metrics_test2]).reset_index(drop=True)
+    metrics_test['train/val/test/test2'] = 'test'
+    metrics_test2['train/val/test/test2'] = 'test2'
+    metrics = pd.concat([metrics_test, metrics_test2]).reset_index(drop=True)
 
-        print("[Main] Problem: {}".format(problem))
-        print(metrics.head())
+    print("[Main] Problem: {}".format(problem))
+    print(metrics.head())
 
-        metrics.to_csv(sub_output_directory + 'classification_metrics.csv')
-        np.savetxt(sub_output_directory + 'confusion_matrix.csv', conf_mat, delimiter=",")
-        itr_result.append(metrics.accuracy[0])
-        itr_result.append(metrics.accuracy[1])
-        sub_output_directory = []
+    metrics.to_csv(sub_output_directory + 'classification_metrics.csv')
+    np.savetxt(sub_output_directory + 'confusion_matrix.csv', conf_mat, delimiter=",")
+    itr_result.append(metrics.accuracy[0])
+    itr_result.append(metrics.accuracy[1])
+    sub_output_directory = []
 
     if len(ALL_Results_list) == 0:
         ALL_Results_list = np.hstack((ALL_Results_list, itr_result))
@@ -194,4 +208,4 @@ for problem in os.listdir(data_path):
     problem_index = problem_index + 1
 
 ALL_Results = pd.DataFrame(ALL_Results_list)
-ALL_Results.to_csv(os.getcwd() + '/Results_'+ classifier_name + '/'+'All_results1.csv')
+ALL_Results.to_csv(os.getcwd() + '/Results_' + classifier_name + '/'+'All_results1.csv')
