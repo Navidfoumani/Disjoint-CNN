@@ -5,10 +5,14 @@
 This is a Tensorflow implementation of Disjoint-CNN for Multivariate Time Series Classification.
 Additionally, a PyTorch implementation of the **1+1D** block is also included.
 
+![img](https://github.com/Navidfoumani/Disjoint-CNN/blob/42abed638332f41fc107934e69e41567c94c6bb2/Fig/DisJoint-CNN.png)
 ## Overview 
 <p align="justify">
   
 Existing models consider a time series as a 1-Dimensional (1D) image and employ 1D convolution operations to extract features from the multivariate time series. However, these models do not consider the importance of the interaction between channels. In this work, we challenge this view and introduce a convolution block called **1+1D** that emphasizes the interaction between input channels. The **1+1D** block explicitly factorizes 1D convolution into two unmixed and successive operations: 1D temporal convolution per channel and 1D spatial convolution that learns the interaction between the channels through the features extracted from the temporal convolution.
+</p>
+<p align="center">
+<img src="https://github.com/Navidfoumani/Disjoint-CNN/blob/42abed638332f41fc107934e69e41567c94c6bb2/Fig/1%2B1D.png" alt="" width="600" height="150">
 </p>
 
 ### 1D convolution:
@@ -38,6 +42,19 @@ conv1 = Permute((1, 3, 2))(conv1)
 </code>
 </pre>
 
+### 1+1D convolution (pytorch):
+<pre>
+<code>
+# Input shape: (Series_length, Channel, 1)
+# Temporal Convolutions
+self.Temporal = nn.Sequential(nn.Conv2d(1, 64, kernel_size=[1, 8], padding='same'), 
+                              nn.BatchNorm2d(emb_size), nn.GELU())
+# Spatial Convolutions
+self.Spatial = nn.Sequential(nn.Conv2d(64, 64, kernel_size=[channel_size, 1], padding='valid'), 
+                             nn.BatchNorm2d(emb_size), nn.GELU())
+</code>
+</pre>
+
 Please note that in the 1+1D convolution implementation, `input` represents the input tensor for the 1+1D block, and `input_shape` refers to the shape of the input series.
 There are two main benefits to this decomposition. 
 <p align="justify">
@@ -63,9 +80,6 @@ In this repository, we reimplement the following algorithms for comparison with 
 - **Disjoint ResNet (D_ResNet):** This model is an extension of ResNet with Disjoint architecture for MTSC.
 
 
-
-
-
 ## Datasets
 We evaluated the Disjoint-CNN model using of 30 datasets from the UEA archive.
 ### Manual download:
@@ -76,7 +90,6 @@ You should manually download the datasets using the provided link and place them
 
 Copy the datasets folder to: Multivariate_ts/<Dataset Name>
 
-  
 ## Installation
 
 _Instructions refer to Unix-based systems (e.g. Linux, MacOS)._
@@ -96,14 +109,15 @@ If you find *ConvTran* useful for your research, please consider citing this pap
 
 ````
 ```
-@misc{foumani2023improving,
-      title={Improving Position Encoding of Transformers for Multivariate Time Series Classification}, 
-      author={Navid Mohammadi Foumani and Chang Wei Tan and Geoffrey I. Webb and Mahsa Salehi},
-      year={2023},
-      eprint={2305.16642},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG}
+@inproceedings{foumani2021disjoint,
+  title={Disjoint-CNN for Multivariate Time Series Classification},
+  author={Foumani, Seyed Navid Mohammadi and Tan, Chang Wei and Salehi, Mahsa},
+  booktitle={2021 International Conference on Data Mining Workshops (ICDMW)},
+  pages={760--769},
+  year={2021},
+  organization={IEEE}
 }
+
 ```
 ````
 
