@@ -88,7 +88,7 @@ You should manually download the datasets using the provided link and place them
 
 **UEA**: http://www.timeseriesclassification.com/Downloads/Archives/Multivariate2018_ts.zip
 
-Copy the datasets folder to: Multivariate_ts/<Dataset Name>
+Copy the datasets folder to: `Multivariate_ts/Dataset Name`
 
 ## Installation
 
@@ -105,7 +105,7 @@ In `Main.py` you can select the datasets and modify the model parameters.
 
 ## Citation
 
-If you find *ConvTran* useful for your research, please consider citing this paper:
+If you find **Disjoint CNN** useful for your research, please consider citing this paper:
 
 ````
 ```
