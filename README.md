@@ -6,10 +6,47 @@ This is a Tensorflow implementation of Disjoint-CNN for Multivariate Time Series
 Additionally, a PyTorch implementation of the **1+1D** block is also included.
 
 ## Overview 
+<p align="justify">
+  
+Existing models consider a time series as a 1-Dimensional (1D) image and employ 1D convolution operations to extract features from the multivariate time series. However, these models do not consider the importance of the interaction between channels. In this work, we challenge this view and introduce a convolution block called **1+1D** that emphasizes the interaction between input channels. The **1+1D** block explicitly factorizes 1D convolution into two unmixed and successive operations: 1D temporal convolution per channel and 1D spatial convolution that learns the interaction between the channels through the features extracted from the temporal convolution.
+</p>
 
+### 1D convolution:
 
+<pre>
+<code>
+# Input shape: (Series_length, Channel)
+conv1 = Conv1D(filters=128, kernel_size=8, padding='same')(input)
+conv1 = BatchNormalization()(conv1)
+conv1 = Activation(activation='relu')(conv1)
+</code>
+</pre>
+### 1+1D convolution:
+<pre>
+<code>
+# Input shape: (Series_length, Channel, 1)
+# Temporal Convolutions
+conv1 = Conv2D(64, (8, 1), strides=1, padding="same", kernel_initializer='he_uniform')(input)
+conv1 = BatchNormalization()(conv1)
+conv1 = ELU(alpha=1.0)(conv1)
 
+# Spatial Convolutions
+conv1 = Conv2D(64, (1, input_shape[1]), strides=1, padding="valid", kernel_initializer='he_uniform')(conv1)
+conv1 = BatchNormalization()(conv1)
+conv1 = ELU(alpha=1.0)(conv1)
+conv1 = Permute((1, 3, 2))(conv1)
+</code>
+</pre>
 
+Please note that in the 1+1D convolution implementation, `input` represents the input tensor for the 1+1D block, and `input_shape` refers to the shape of the input series.
+There are two main benefits to this decomposition. 
+<p align="justify">
+First, we can use an additional nonlinear activation function between these two operations, providing the model with an additional nonlinear representation. This doubling of nonlinear functions allows the model to extract more complex functions with fewer parameters, while keeping the number of parameters approximately the same as typical 1D convolution operations.
+</p>
+
+<p align="justify">
+Second, this decomposition facilitates the optimization process in our deep neural network model. Compared to typical 1D filters where temporal and spatial filters are intertwined, the 1+1D blocks (with decomposed temporal and spatial components) are easier to optimize, resulting in lower test and training loss in practice.
+</p>
 
 
 In this repository, we reimplement the following algorithms for comparison with Disjoint CNN:
