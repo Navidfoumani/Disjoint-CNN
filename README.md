@@ -1,7 +1,7 @@
 # Disjoint-CNN for Multivariate Time Series Classification
 
 #### Authors: [Navid Mohammadi Foumani](https://www.linkedin.com/in/navid-foumani/), [Chang Wei Tan](https://changweitan.com/), [Mahsa Salehi](https://research.monash.edu/en/persons/mahsa-salehi)
-#### ConvTran Paper: [ICDM](https://ieeexplore.ieee.org/document/9679860)
+#### ConvTran Paper: [ICDM21](https://ieeexplore.ieee.org/document/9679860)
 This is a Tensorflow implementation of Disjoint-CNN for Multivariate Time Series Classification.
 Additionally, a PyTorch implementation of the **1+1D** block is also included.
 
